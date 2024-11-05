@@ -1,7 +1,11 @@
+import { useParams } from 'react-router-dom'
+import { DetalleEvento } from '../components/DetalleEvento'
+
 export const DetallesEventoPage = () => {
+    const { id } = useParams();
     return (
         <>
-            <h2>Detalles de Evento</h2>
+            <DetalleEvento id={id}/>
         </>
     )
 }
