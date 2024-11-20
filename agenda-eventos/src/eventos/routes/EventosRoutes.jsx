@@ -6,7 +6,6 @@ import { EliminarEventoPage } from '../pages/EliminarEventoPage'
 export const EventosRoutes = () => {
     return (
         <>
-            <Navbar />
             <div className="container">
                 <Routes>
                     <Route path='listado-eventos' element={<ListadoEventosPage />}></Route>

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import api from '../../shared/api/api'
 export const FormularioEvento = ({evento, onSave}) => {
 
+    const { id } = JSON.parse(localStorage.getItem('usuario'));
     const [formData, setFormData] = useState(
         evento || 
         { 
             nombre: '', 
+            usuarioId: id,
             descripcion: '', 
             fecha: '', 
             duracion: '', 
@@ -26,7 +28,8 @@ export const FormularioEvento = ({evento, onSave}) => {
                 notas: evento.notas || '', 
                 hora: evento.hora || '', 
                 recurrente: evento.recurrente || false, 
-                id: evento.id
+                id: evento.id,
+                usuarioId: evento.usuarioId
             }); 
         } }, [evento]);
 
@@ -41,6 +44,7 @@ export const FormularioEvento = ({evento, onSave}) => {
     
     const handleSubmit = async (e) => { 
         e.preventDefault(); 
+        console.log(formData);
         if (evento) { 
             await api.put(`/eventos`, formData); 
         } else { 
@@ -85,7 +89,7 @@ export const FormularioEvento = ({evento, onSave}) => {
                     <label> 
                         Recurrente: <input type="checkbox" name="recurrente" checked={formData.recurrente} onChange={handleChange} /> 
                     </label> 
-            </div>
+                </div>
                 <button type="submit" className='btn btn-primary'>Guardar Evento</button>
             </form>
         </>

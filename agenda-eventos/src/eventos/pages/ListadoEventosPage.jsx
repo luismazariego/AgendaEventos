@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { ListadoEventos } from '../components/ListadoEventos'
 
 export const ListadoEventosPage = () => {
-    const users = ['usuario1', 'usuario2', 'usuario3'];
     return (
         <>
            <div className='mb-2'>

@@ -37,7 +37,7 @@ export const Navbar = () => {
 
                     <NavLink 
                         className={({isActive}) => `nav-item nav-link ${isActive ? 'active':''}`}
-                        to="/recordatorios"
+                        to="/listado-recordatorios"
                     >
                         Recordatorios
                     </NavLink>
