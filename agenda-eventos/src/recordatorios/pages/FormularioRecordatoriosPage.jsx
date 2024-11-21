@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormularioRecordatorios } from '../components'
 import { useEffect, useState } from 'react';
+import { obtenerRecordatorioPorId } from '../helpers';
 
 
 export const FormularioRecordatoriosPage = () => {
@@ -12,6 +13,7 @@ export const FormularioRecordatoriosPage = () => {
         if (id) {
             const getRecordatorio = async () => {
                 const res = await obtenerRecordatorioPorId(id);
+                console.log(res.data);
                 setRecordatorio(res.data);
             };
             getRecordatorio();
@@ -20,7 +22,7 @@ export const FormularioRecordatoriosPage = () => {
 
     const onSave = () => {
         console.log('Recordatorio guardado');
-        navigate('/');
+        navigate('/listado-recordatorios');
     }
 
     return (

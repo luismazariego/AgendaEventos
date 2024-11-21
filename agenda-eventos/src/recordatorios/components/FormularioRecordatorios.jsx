@@ -11,16 +11,16 @@ export const FormularioRecordatorios = ({
 
     const id = getUsuarioId();
     const metodosNotificacion = [
-        { title: 'Correo', value: 0 }, 
-        { title: 'Notificacion Web', value: 1 }, 
-        { title: 'Celular', value: 2 }, 
-        { title: 'Otro', value: 3 }
+        { title: 'Correo', value: 1 }, 
+        { title: 'Notificacion Web', value: 2 }, 
+        { title: 'Celular', value: 3 }, 
+        { title: 'Otro', value: 4 }
     ];
     const periodos = [
-        { periodo: 'Diario', value: 1 },
-        { periodo: 'Mensual', value: 0 },
-        { periodo: 'Por Horas', value: 2 },
-        { periodo: 'Por Minutos', value: 3 }
+        { periodo: 'Diario', value: 2 },
+        { periodo: 'Mensual', value: 1 },
+        { periodo: 'Por Horas', value: 3 },
+        { periodo: 'Por Minutos', value: 4 }
     ];
     const [formData, setFormData] = useState(recordatorio || 
         {
@@ -33,6 +33,22 @@ export const FormularioRecordatorios = ({
             periodoTiempo: -1,
             repeticiones: -1
         });
+
+    useEffect(() => {
+        if(recordatorio){
+            setFormData({
+                eventoId: recordatorio.eventoId || '',
+                usuarioId: recordatorio.usuarioId || id,
+                fechaInicioRecordatorio: recordatorio.fechaInicioRecordatorio || '',
+                fechaFinRecordatorio: recordatorio.fechaFinRecordatorio || '',
+                metodo: recordatorio.metodo || -1,
+                recordatorioRecurrente: recordatorio.recordatorioRecurrente || false,
+                periodoTiempo: recordatorio.periodoTiempo || -1,
+                repeticiones: recordatorio.repeticiones || -1,
+                id: recordatorio.id
+            })
+        }
+    }, [recordatorio])
 
     const [eventosData, setEventosData] = useState([]);
 
@@ -175,7 +191,7 @@ export const FormularioRecordatorios = ({
                                value={formData.repeticiones} />
                     </div>
                 )}
-                <button type="submit" className='btn btn-primary'>Crear Recordatorio</button>
+                <button type="submit" className='btn btn-primary'>{ recordatorio ? 'Actualizar' : 'Crear' } Recordatorio</button>
             </form>
         </>
     );

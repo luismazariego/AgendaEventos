@@ -35,7 +35,7 @@ export const RecordatoriosCard = (
                         <p className="card-text">
                             Inicio de Recordatorio: { fechaInicioJS.toLocaleDateString('es-SV', opcionesFecha) }
                             &nbsp;a { horaTexto(fechaInicioJS) } { fechaInicioJS.toLocaleTimeString('es-SV', opcionesHora) } </p>
-                        <Link className='card-link' to={`/detalles-recordatorio/${ id }`}> Ver mas Detalles </Link>
+                        <Link className='card-link' to={`/detalle-recordatorio/${ id }`}> Ver mas Detalles </Link>
                     </div>
                 </div>
             </div>

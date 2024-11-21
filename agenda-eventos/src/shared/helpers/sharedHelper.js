@@ -17,3 +17,22 @@ export const getUsuarioId = () => {
         return '';
     }
 };
+
+export const getDateSVFormat = (fecha) => {
+    const dateOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    return new Date(fecha).toLocaleDateString('es-SV', dateOptions);
+}
+
+export const getTimeSVFormat = (fecha) => {
+    const timeOptions = {
+        hour: "2-digit", 
+        minute: "2-digit"
+    }
+    return new Date(fecha).toLocaleTimeString('es-SV', timeOptions);
+}
+
