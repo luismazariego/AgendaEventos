@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
     const login = async ( correo = '', password = '') => {
         
         const result = await loginUsuario(correo, password);
-        
         if (result.status === 200 && result.data?.id) {
             localStorage.setItem('usuario', JSON.stringify( result.data ));
         }

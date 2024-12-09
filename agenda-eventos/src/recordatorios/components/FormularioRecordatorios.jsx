@@ -62,21 +62,24 @@ export const FormularioRecordatorios = ({
 
     const [periodosTiempo, setPeriodosTiempo] = useState([]);
     useEffect(() => {
-        const fechaI_js = new Date(formData.fechaInicioRecordatorio);
-        const fechaF_js = new Date(formData.fechaFinRecordatorio);
-
+        
+        
         const getPeriodoTiempo = () => {
-            setPeriodosTiempo([]);
-            if (differenceInHours(fechaF_js, fechaI_js) > 2 && differenceInHours(fechaF_js, fechaI_js) < 24) {
+            const fechaI_js = new Date(formData.fechaInicioRecordatorio);
+            const fechaF_js = new Date(formData.fechaFinRecordatorio);
+            if (differenceInHours(fechaF_js, fechaI_js) > 2 && differenceInHours(fechaF_js, fechaI_js) <= 24) {
+                setPeriodosTiempo(periodos.filter(p => p.value > 2));
+            } else if (differenceInDays(fechaF_js, fechaI_js) > 1 && differenceInDays(fechaF_js, fechaI_js) < 31) {
                 setPeriodosTiempo(periodos.filter(p => p.value > 1));
-            } else if (differenceInDays(fechaF_js, fechaI_js) > 1 && differenceInDays(fechaF_js, fechaI_js) < 30) {
-                setPeriodosTiempo(periodos.filter(p => p.value > 0));
-            } else {
+            } else if (differenceInMonths(fechaF_js, fechaI_js) > 1) {
                 setPeriodosTiempo(periodos);
+            } 
+             else {
+                setPeriodosTiempo(periodos.filter(p => p.value > 1));
             }
         };
         getPeriodoTiempo();
-    }, [formData.fechaFinRecordatorio]);
+    }, [formData.fechaInicioRecordatorio, formData.fechaFinRecordatorio]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -86,7 +89,8 @@ export const FormularioRecordatorios = ({
                 ...formData,
                 metodo: parseInt(formData.metodo),
                 periodoTiempo: parseInt(formData.periodoTiempo),
-                repeticiones: parseInt(formData.repeticiones)
+                repeticiones: parseInt(formData.repeticiones),
+                fechaFinRecordatorio: formData.fechaFinRecordatorio ? formData.fechaFinRecordatorio : formData.fechaInicioRecordatorio
             }
             console.log('Datos enviados:', formDataToSend)
             if (recordatorio) {

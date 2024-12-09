@@ -60,7 +60,9 @@
 import api from '../../shared/api/api';
 
 export const obtenerEventosPorUsuario = async (usuarioId) => {
+    
     const eventoResponse = await api.get(`/eventos/usuario/${usuarioId}`);
+    
     return eventoResponse;
 }
 
@@ -74,3 +76,21 @@ export const obtenerEliminarEventoInfoPorId = async (id) => {
     return evento;
 }
 
+export const obtenerEventos = async () => {
+    const eventos = await api.get('/eventos');
+    return eventos
+}
+
+export const suscribirUsuarioEvento = async (usuarioId, eventoId) => {
+    const dto = {
+        usuarioId,
+        eventoId
+    };
+    const suscripcion = await api.post('/eventos/suscribirme', dto);
+    return suscripcion;
+}
+
+export const eliminarSuscripcionUsuarioEvento = async (usuarioId, eventoId) => {    
+    const suscripcion = await api.delete(`/eventos/suscribirme/${usuarioId}/${eventoId}`);
+    return suscripcion;
+}

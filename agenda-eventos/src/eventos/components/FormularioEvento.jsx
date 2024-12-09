@@ -3,6 +3,15 @@ import api from '../../shared/api/api'
 export const FormularioEvento = ({evento, onSave}) => {
 
     const { id } = JSON.parse(localStorage.getItem('usuario'));
+
+    const patronesRecurrencia = [
+        { id: 1, valor: 'Semanal' },
+        { id: 2, valor: 'Mensual' },
+        { id: 3, valor: 'Anual' },
+        { id: 4, valor: 'Diario' },
+        { id: 5, valor: 'Unico' },
+    ]
+
     const [formData, setFormData] = useState(
         evento || 
         { 
@@ -13,8 +22,10 @@ export const FormularioEvento = ({evento, onSave}) => {
             duracion: '', 
             ubicacion: '', 
             notas: '', 
-            hora: '', 
             recurrente: false, 
+            patron: '',
+            intervaloRecurrencia: 1,
+            fechaFin: ''
         });
     
     useEffect(() => { 
@@ -25,11 +36,13 @@ export const FormularioEvento = ({evento, onSave}) => {
                 fecha: evento.fecha || '', 
                 duracion: evento.duracion || '', 
                 ubicacion: evento.ubicacion || '', 
-                notas: evento.notas || '', 
-                hora: evento.hora || '', 
+                notas: evento.notas || '',
                 recurrente: evento.recurrente || false, 
                 id: evento.id,
-                usuarioId: evento.usuarioId
+                usuarioId: evento.usuarioId,
+                fechaFin: evento.fechaFin || '',
+                patron: evento.patron || '',
+                intervaloRecurrencia: 1
             }); 
         } }, [evento]);
 
@@ -44,11 +57,14 @@ export const FormularioEvento = ({evento, onSave}) => {
     
     const handleSubmit = async (e) => { 
         e.preventDefault(); 
-        console.log(formData);
+        const formDataToSend = {
+            ...formData,
+            patron: parseInt(formData.patron)
+        }
         if (evento) { 
-            await api.put(`/eventos`, formData); 
+            await api.put(`/eventos`, formDataToSend); 
         } else { 
-            await api.post('/eventos', formData); 
+            await api.post('/eventos', formDataToSend); 
         } 
         onSave();
     }
@@ -64,10 +80,6 @@ export const FormularioEvento = ({evento, onSave}) => {
                 <div className="mb-3">
                     <label htmlFor="descripcion" className="form-label">Descripcion del evento:</label>
                     <textarea name="descripcion" id='descripcion' value={formData.descripcion} onChange={handleChange} className='form-control' />
-                </div>
-                <div className='mb-3'>
-                    <label htmlFor='imagen' className='form-label'>Imagen del Evento:</label>
-                    <input type='file' id='imagen' name='imagen' className='form-control' onChange={handleChange}></input>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="fechaHora" className="form-label">Fecha y Hora del evento:</label>
@@ -90,6 +102,45 @@ export const FormularioEvento = ({evento, onSave}) => {
                         Recurrente: <input type="checkbox" name="recurrente" checked={formData.recurrente} onChange={handleChange} /> 
                     </label> 
                 </div>
+                {
+                    formData.recurrente && (
+                        <>
+                            <div className="mb-3">
+                                <label htmlFor="patron" className='form-label'>Seleccione el patron de recurrencia:</label>
+                                <select className='form-select'
+                                        name='patron'
+                                        onChange={ handleChange }
+                                        value={ formData.patron }>
+                                    <option key='-1' value='-1'>Seleccione un patron</option>
+                                    {
+                                        patronesRecurrencia.map(patron => (
+                                            <option key={ patron.id } value={ patron.id }>{ patron.valor }</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className='mb-3'>
+                                <label className='form-label' htmlFor='fechaFin'>Fecha y Hora de finalizacion del evento</label>
+                                <input type='datetime-local'
+                                       className='form-control'
+                                       id='fechaFin'
+                                       name='fechaFin'
+                                       onChange={ handleChange }
+                                       value={ formData.fechaFin } />
+                            </div>
+                            {/* <div className="mb-3">
+                                <label className='form-label' htmlFor='intervalo'>Numero de ocurrencias</label>
+                                <input type="number" 
+                                       name="intervaloRecurrencia" 
+                                       id="intervalo"
+                                       max='5'
+                                       className='form-control'
+                                       onChange={ handleChange }
+                                       value={ formData.intervaloRecurrencia } />
+                            </div> */}
+                        </>
+                    )
+                }
                 <button type="submit" className='btn btn-primary'>Guardar Evento</button>
             </form>
         </>

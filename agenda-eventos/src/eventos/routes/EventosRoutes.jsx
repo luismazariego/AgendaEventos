@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { Navbar } from '../../shared'
 import { ListadoEventosPage, FormularioEventosPage, DetallesEventoPage } from '../pages'
 import { EliminarEventoPage } from '../pages/EliminarEventoPage'
+import { CalendarPage } from '../pages/CalendarPage'
 
 export const EventosRoutes = () => {
     return (
@@ -13,7 +14,7 @@ export const EventosRoutes = () => {
                     <Route path='formulario-evento/:id' element={<FormularioEventosPage />}></Route>
                     <Route path='detalles-evento/:id' element={<DetallesEventoPage />}></Route>
                     <Route path='eliminar-evento/:id' element={<EliminarEventoPage />}></Route>
-                    
+                    <Route path='calendario-eventos' element={< CalendarPage /> }></Route>
                     <Route path='/' element={<Navigate to='/listado-eventos' />}></Route>
                 </Routes>
             </div>            

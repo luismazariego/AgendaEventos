@@ -9,7 +9,15 @@ export const ListadoEventosPage = () => {
                 <hr />
                 <ListadoEventos />                
            </div>
-           <Link className='btn btn-primary' to={'/formulario-evento'}>Crear nuevo <i className="bi bi-plus-lg"></i></Link>
+           <div className="row mb-2">
+                <div className='col-2'>
+                    <Link className='btn btn-primary' to={'/formulario-evento'}>Crear nuevo <i className="bi bi-plus-lg"></i></Link>
+                </div>
+                <div className='col-2'>
+                    <Link className='btn btn-info' to={'/calendario-eventos'}>Vista de Calendario <i className="bi bi-calendar-event"></i></Link>
+                </div>
+           </div>
+           
         </>
     )
 }
